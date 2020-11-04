@@ -1,0 +1,17 @@
+sudo: required
+services:
+  - docker
+before_install:
+  - docker build -t guanxin43/react-test -f ./client/Dockerfile.dev ./client
+scripts:
+  - docker run -e CI=true guanxin43/react-test npm run test -- --coverage
+after_success:
+  - docker build -t guanxin43/multi-client ./client
+  - docker build -t guanxin43/multi-nginx ./nginx
+  - docker build -t guanxin43/multi-server ./server
+  - docker build -t guanxin43/multi-worker ./worker
+  - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_ID"
+  - docker push guanxin43/multi-client
+  - docker push guanxin43/multi-nginx
+  - docker push guanxin43/multi-server
+  - docker push guanxin43/multi-worker
