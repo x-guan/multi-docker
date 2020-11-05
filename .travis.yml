@@ -10,7 +10,7 @@ after_success:
   - docker build -t guanxin43/multi-nginx ./nginx
   - docker build -t guanxin43/multi-server ./server
   - docker build -t guanxin43/multi-worker ./worker
-  - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_ID"
+  - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_ID" --password-stdin
   - docker push guanxin43/multi-client
   - docker push guanxin43/multi-nginx
   - docker push guanxin43/multi-server
