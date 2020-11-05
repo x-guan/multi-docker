@@ -4,7 +4,7 @@ services:
 before_install:
   - docker build -t guanxin43/react-test -f ./client/Dockerfile.dev ./client
 scripts:
-  - docker run -e CI=true guanxin43/react-test npm run test -- --coverage
+  - docker run -e CI=true guanxin43/react-test npm test
 after_success:
   - docker build -t guanxin43/multi-client ./client
   - docker build -t guanxin43/multi-nginx ./nginx
